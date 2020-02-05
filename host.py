@@ -25,7 +25,7 @@ class host(object):
                 print("reach server")
                 header = cherrypy.request.headers
                 rawData = cherrypy.request.body.read(int(cherrypy.request.headers['Content-Length']))
-                body = rawData.json()
+                body = json.loads(rawData)
                 #function call to route the header
                 userid = body["datahdr"]["userid"]
                 logging.config.fileConfig("loggers.conf", defaults={'logfilename':userid}, disable_existing_loggers=False)
