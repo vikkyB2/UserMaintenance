@@ -24,7 +24,7 @@ class host(object):
             if cherrypy.request.method == 'POST':
                 print("reach server")
                 header = cherrypy.request.headers
-                rawData = cherrypy.request.body.read(int(cherrypy.request.headers['Content-Length'])).decode('utf-8'
+                rawData = cherrypy.request.body.read(int(cherrypy.request.headers['Content-Length'])).decode('utf-8')
                 body = json.loads(rawData)
                 #function call to route the header
                 userid = body["datahdr"]["userid"]
