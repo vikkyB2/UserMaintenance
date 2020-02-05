@@ -58,11 +58,11 @@ def logout_user(userId,appId,sessionId):
 def pinExpiry(appid,userid):
     logging.debug("pin expiry")
     result = excecuteFetchoneQuery("""SELECT max("CHANGE_TIME") as LAST_MODF FROM "TB_USER_PASSWORDS" where "USER_ID" like '""" + userid + """' and "APP_ID" like '""" + appid + "'")
-    if result is not [None] and result is not None :
-        logging.debug("No previous password")
+    if result != "" and result is not None :
+        logging.debug("password present")
         maxModf = result["LAST_MODF"]
         config = excecuteFetchoneQuery("""SELECT * FROM "TB_APP_CONFIGS" where "APP_ID" like '""" + appid +  "'"  )
-        if config is not [None] and config is not None :
+        if config != "" and config is not None :
             passwordExpiry = config["PASS_CHANGE_FREQ"]
             logging.debug(maxModf)
             return checkExpiry(maxModf,passwordExpiry)
