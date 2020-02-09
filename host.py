@@ -8,8 +8,9 @@ import logging.config
 import traceback
 from apps.routerequest.routerequest import routeRequest
 
+
 class host(object):
-   
+
     @cherrypy.expose
     def index(self):
         rslt = ""
@@ -40,11 +41,11 @@ class host(object):
             rslt = "Excetion occurs"
             print("Exception occurs") 
             traceback.print_exc()
-        return  rslt
+        return rslt
 
 
 def main():
-    cherrypy.config.update({'server.socket_host': "ec2-13-233-198-149.ap-south-1.compute.amazonaws.com", 'server.socket_port': 8001,'cors.expose.on': True,})
+    cherrypy.config.update({'server.socket_host': "ec2-3-6-38-167.ap-south-1.compute.amazonaws.com", 'server.socket_port': 8001,'cors.expose.on': True,})
     cherrypy.tree.mount(host(),'/')
     cherrypy.response.headers["Access-Control-Allow-Origin"] = "*"
     #cherrypy.response.headers[ "Content-Type"] = "application/json"
@@ -57,13 +58,14 @@ def main():
 
 
 class myFileHandler(logging.FileHandler):
-    def __init__(self,path,fileName,mode):
-        path = path+ "/" + fileName
+    def __init__(self, path, filename, mode):
+        path = path + "/" + filename
         try:
             os.mkdir(path)
         except:
             print("log file exsists")
-        super(myFileHandler,self).__init__(path+"/"+"server.log",mode)
+        super(myFileHandler, self).__init__(path+"/"+"server.log", mode)
+
 
 if  __name__ == "__main__":
     main()
