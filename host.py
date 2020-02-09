@@ -45,7 +45,7 @@ class host(object):
 
 
 def main():
-    cherrypy.config.update({'server.socket_host': "localhost", 'server.socket_port': 8001,'cors.expose.on': True,})
+    cherrypy.config.update({'server.socket_host': "ec2-3-6-38-167.ap-south-1.compute.amazonaws.com", 'server.socket_port': 8001,'cors.expose.on': True,})
     cherrypy.tree.mount(host(),'/')
     cherrypy.response.headers["Access-Control-Allow-Origin"] = "*"
     #cherrypy.response.headers[ "Content-Type"] = "application/json"
