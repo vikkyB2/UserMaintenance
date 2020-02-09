@@ -10,6 +10,7 @@ import logging
 #log = configLogger(logging.getLogger(__name__))
 
 def excecuteFetchoneQuery(query):
+    logging.debug(query)
     myresult = ""
     try:
         # read connection parameters
@@ -58,16 +59,16 @@ def excecuteInsertQuery(sql,val):
 
     inserted = False
     try:
-        # read connection parameters
+         # read connection parameters
         params = config()
  
         # connect to the PostgreSQL server
         print('Connecting to the PostgreSQL database...')
         conn = psycopg2.connect(**params)
 
-        mydb = conn.cursour(cursor_factory = psycopg2.extras.DictCursor)
+        mydb = conn.cursor()
         mydb.execute(sql,val)
-        mydb.commit()
+        conn.commit()
         mydb.close()
         inserted = True
     except Exception as e: 
@@ -87,8 +88,9 @@ def excecuteDeleteQuery(query):
         print('Connecting to the PostgreSQL database...')
         conn = psycopg2.connect(**params)
 
-        mydb = conn.cursour(cursor_factory = psycopg2.extras.DictCursor)
+        mydb = conn.cursor()
         mydb.execute(query)
+        conn.commit()
         deleted = True
         mydb.close()
     except Exception as e: 
@@ -109,10 +111,10 @@ def excecuteUpdateQuery(query):
         print('Connecting to the PostgreSQL database...')
         conn = psycopg2.connect(**params)
 
-        mydb = conn.cursour(cursor_factory=psycopg2.extras.RealDictCursor)
+        mydb = conn.cursor()
         mydb.execute(query)
+        conn.commit()
         updated = True
-        mydb.commit()
         mydb.close()
     except Exception as e: 
         logging.debug(e)

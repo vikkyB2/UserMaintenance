@@ -3,7 +3,7 @@ import json
 import time
 from datetime import datetime
 import random 
-from apps.DBUtils.sql_utils import excecuteFetchoneQuery,excecuteInsertQuery,excecuteUpdateQuery
+from apps.DBUtils.sql_utils import excecuteFetchoneQuery,excecuteInsertQuery,excecuteUpdateQuery,excecuteDeleteQuery
 from apps.Utils.date_time_utils import isNewDay
 import logging
 
@@ -33,14 +33,14 @@ def fetchSessionIfExsists(userId,appId):
             sessionId = ""
     else:
             logging.debug("Since session Id is null delete the record")
-            excecuteUpdateQuery("DELETE FROM TB_USER_LAST_LOGIN WHERE USER_ID = '" + userId  + "' AND APP_ID = '" + appId + "'" )
+            excecuteDeleteQuery("""DELETE FROM "TB_USER_LAST_LOGIN" WHERE "USER_ID" = '""" + userId  + """' AND "APP_ID" = '""" + appId + """'""" )
     
     return sessionId
 
 #fetch session data of particular user 
 def fetchSessionDataExsists(userId,appId):
     sessionData = ""
-    result = excecuteFetchoneQuery("SELECT * FROM TB_USER_LAST_LOGIN where user_id like '" + userId + "' and app_id like '" + appId + "'" )
+    result = excecuteFetchoneQuery("""SELECT * FROM "TB_USER_LAST_LOGIN" where "USER_ID" like '""" + userId + """' and "APP_ID" like '""" + appId + "'" )
     if result != "" and result is not None :
         if result["SESSION_ID"] != "" and result["SESSION_ID"] is not None:
             sessionData = result
@@ -49,7 +49,7 @@ def fetchSessionDataExsists(userId,appId):
 #fetch session data of particular user 
 def checkfetchSessionDataExsists(userId,appId,sessionId):
     sessionData = ""
-    result = excecuteFetchoneQuery("SELECT * FROM TB_USER_LAST_LOGIN where user_id like '" + userId + "' and app_id like '" + appId + "' AND SESSION_ID = '" + sessionId + "'"  )
+    result = excecuteFetchoneQuery("""SELECT * FROM "TB_USER_LAST_LOGIN" where "USER_ID" like '""" + userId + """' and "APP_ID" like '""" + appId + """' AND "SESSION_ID" = '""" + sessionId + "'"  )
     if result != "" and result is not None :
         if result["SESSION_ID"] != "" and result["SESSION_ID"] is not None:
             sessionData = result
@@ -66,7 +66,7 @@ def createSession(userId,appId):
         #login_time = ""
         #last_request_time = ""
         #create_ts = ""
-        query = "INSERT INTO TB_USER_LAST_LOGIN (USER_ID,APP_ID,DEVICE_ID,SESSION_ID,LOGIN_TIME,LAST_REQ_TIME,CREATE_TS) VALUES (%s,%s,%s,%s,%s,%s,%s)"
+        query = """INSERT INTO "TB_USER_LAST_LOGIN" ("USER_ID","APP_ID","DEVICE_ID","SESSION_ID","LOGIN_TIME","LAST_REQ_TIME","CREATE_TS") VALUES (%s,%s,%s,%s,%s,%s,%s)"""
         values = (userId,appId,device_id,session_id,currdate,currdate,currdate)
         result = excecuteInsertQuery(query,(values))
         if result == True:
@@ -82,7 +82,7 @@ def updateSessiononLogin(userId,appId,sessionId):
     sessionUpdated = False
     currdate = time.strftime('%Y-%m-%d %H:%M:%S')
     logging.debug("Session id exsists and updating the last request and last login")
-    sessionUpdated = excecuteUpdateQuery("UPDATE TB_USER_LAST_LOGIN SET LAST_REQ_TIME = '" + currdate + "' , LOGIN_TIME = '" + currdate + "' WHERE USER_ID = '" + userId  + "' AND APP_ID = '" + appId + "' AND SESSION_ID = '" + sessionId + "'" )
+    sessionUpdated = excecuteUpdateQuery("""UPDATE "TB_USER_LAST_LOGIN" SET "LAST_REQ_TIME" = '""" + currdate + """' , "LOGIN_TIME" = '""" + currdate + """' WHERE "USER_ID" = '""" + userId  + """' AND "APP_ID" = '""" + appId + """' AND "SESSION_ID" = '""" + sessionId + "'" )
     return sessionUpdated
 
 # update the session time
@@ -91,17 +91,17 @@ def updateSession(userId,appId,sessionId):
     sessionUpdated = False
     currdate = time.strftime('%Y-%m-%d %H:%M:%S')
     logging.debug("Session id exsists and updating the last request and last login")
-    sessionUpdated = excecuteUpdateQuery("UPDATE TB_USER_LAST_LOGIN SET LAST_REQ_TIME = '" + currdate + "' WHERE USER_ID = '" + userId  + "' AND APP_ID = '" + appId + "' AND SESSION_ID = '" + sessionId + "'" )
+    sessionUpdated = excecuteUpdateQuery("""UPDATE "TB_USER_LAST_LOGIN" SET "LAST_REQ_TIME" = '""" + currdate + """' WHERE "USER_ID" = '""" + userId  + """' AND "APP_ID" = '""" + appId + """' AND "SESSION_ID" = '""" + sessionId + "'" )
     return sessionUpdated
 
 # update the session expiry
 def updatesessionExpiry(userId,appId):
     sessionUpdated = False
-    sessionUpdated = excecuteUpdateQuery("DELETE FROM TB_USER_LAST_LOGIN WHERE USER_ID = '" + userId  + "' AND APP_ID = '" + appId + "'" )
+    sessionUpdated = excecuteDeleteQuery("""DELETE FROM "TB_USER_LAST_LOGIN" WHERE "USER_ID" = '""" + userId  + """' AND "APP_ID" = '""" + appId + "'" )
     return sessionUpdated
 
 #delete session
 def deleteSession(userId,appId,sessionId):
     sessionUpdated = False
-    sessionUpdated = excecuteUpdateQuery("DELETE FROM TB_USER_LAST_LOGIN WHERE USER_ID = '" + userId  + "' AND APP_ID = '" + appId + "' AND SESSION_ID = '" + sessionId + "'"  )
+    sessionUpdated = excecuteDeleteQuery("""DELETE FROM "TB_USER_LAST_LOGIN" WHERE "USER_ID" = '""" + userId  + """' AND "APP_ID" = '""" + appId + """' AND "SESSION_ID" = '""" + sessionId + "'"  )
     return sessionUpdated
