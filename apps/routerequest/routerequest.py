@@ -2,7 +2,7 @@ import json
 import logging
 
 from apps.usermaintainance.login_user import login_user,logout_user
-from apps.itemdata import fetchItems
+from apps.itemdata.items import fetchItems
 from apps.sessiongateway.check_request_session import validateSession
 from apps.usermaintainance.create_user import create_user
 from apps.Utils.formresponse import formHdrResp,formScssResp
