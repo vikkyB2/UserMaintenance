@@ -45,7 +45,7 @@ def routeRequest(reqjson,header):
             logging.debug("Requests without interfaces")
             respjson["hdrResp"] = formHdrResp("007",INVALID_REQUEST)
     except:
-        logging.debug("Exception access json data")
+        logging.debug("Exception " + e.msg)
         respjson["hdrResp"] = formHdrResp("007",BAD_REQUEST)
     
     return respjson
