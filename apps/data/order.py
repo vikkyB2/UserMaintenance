@@ -10,7 +10,7 @@ def order(orderdata):
     creds = ServiceAccountCredentials.from_json_keyfile_name('apps/data/credentials.json',scope)
     client = gspread.authorize(creds)
     logging.debug("time")
-    sheet = client.open('salesforce_items').sheet3
+    sheet = client.open('salesforce_items').worksheet('Sheet3')
     row=[sheet.row_count-1,str(orderdata)]
     logging.debug(sheet.row_count)
     sheet.insert_row(row,sheet.row_count)
