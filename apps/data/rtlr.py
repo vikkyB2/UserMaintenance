@@ -5,7 +5,7 @@ import pandas as pd
 import logging
 
 
-def fetchItems():
+def fetchRtlr():
     logging.debug("fetchh items")
     scope =  ['https://www.googleapis.com/auth/spreadsheets', "https://www.googleapis.com/auth/drive.file", "https://www.googleapis.com/auth/drive"]
     creds = ServiceAccountCredentials.from_json_keyfile_name('apps/itemdata/credentials.json',scope)
