@@ -11,7 +11,7 @@ def order(orderdata):
     client = gspread.authorize(creds)
     logging.debug("time")
     sheet = client.open('salesforce_items').worksheet('Sheet3')
-    row=[sheet.row_count-1,str(orderdata)]
+    row=[sheet.row_count,str(orderdata)]
     logging.debug(sheet.row_count)
     sheet.insert_row(row,sheet.row_count)
     #legislators = sheet.get_all_records()
