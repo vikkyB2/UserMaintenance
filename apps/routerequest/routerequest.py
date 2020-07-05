@@ -44,8 +44,8 @@ def routeRequest(reqjson,header):
         else:
             logging.debug("Requests without interfaces")
             respjson["hdrResp"] = formHdrResp("007",INVALID_REQUEST)
-    except:
-        logging.debug("Exception " + e.msg)
+    except Exception as e:
+        logging.debug("Exception " + str(e))
         respjson["hdrResp"] = formHdrResp("007",BAD_REQUEST)
     
     return respjson
