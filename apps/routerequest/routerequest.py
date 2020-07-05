@@ -20,10 +20,10 @@ def routeRequest(reqjson,header):
         reqDetails = req['requestDetails']
         reqId = req['requestDetails']['requestId']
         if reqId == SVR_LOG_IN:
-            print("Login")
-            print(json.dumps(req))
+            logging.debug("Login")
+            logging.debug(json.dumps(req))
             userid = req["requestData"]["userid"]
-            print("user Id " + userid)
+            logging.debug("user Id " + userid)
             respjson["resp"] = login_user(req,userid,appid)
         elif reqId == SVR_LOG_OUT:
             respjson["resp"] = logout_user(userid,appid,sessionId)
@@ -31,21 +31,21 @@ def routeRequest(reqjson,header):
             respjson["resp"] = fetchItems()
         elif req['requestDetails']['session'] == True:
             sessionvalid = validateSession(userid,appid,sessionId)
-            print(str(sessionvalid))
+            logging.debug(str(sessionvalid))
             if sessionvalid:
-                print("A valid session")
+                logging.debug("A valid session")
                 if reqId == SVR_CHNG_PASS:
                     respjson["resp"] = formScssResp("000","Success","changepassword",{})
                 elif reqId == SVR_CREATEUSER:
-                    print("create user")
+                    logging.debug("create user")
                     respjson["resp"] = create_user(reqDetails)
             else :
                 respjson["hdrResp"] = formHdrResp("006",INVALID_SESSION)
         else:
-            print("Requests without interfaces")
+            logging.debug("Requests without interfaces")
             respjson["hdrResp"] = formHdrResp("007",INVALID_REQUEST)
     except:
-        print("Exception access json data")
+        logging.debug("Exception access json data")
         respjson["hdrResp"] = formHdrResp("007",BAD_REQUEST)
     
     return respjson
