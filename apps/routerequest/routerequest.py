@@ -31,7 +31,7 @@ def routeRequest(reqjson,header):
             respjson["resp"] = logout_user(userid,appid,sessionId)
         elif reqId == FETCH_RTLR:
             respjson["resp"] = fetchRetailer()
-         elif reqId == ORDER:
+        elif reqId == ORDER:
             respjson["resp"] = order(reqDetails)
         elif req['requestDetails']['session'] == True:
             sessionvalid = validateSession(userid,appid,sessionId)
