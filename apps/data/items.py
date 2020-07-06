@@ -6,7 +6,7 @@ import logging
 
 def fetchItems():
     scope =  ['https://www.googleapis.com/auth/spreadsheets', "https://www.googleapis.com/auth/drive.file", "https://www.googleapis.com/auth/drive"]
-    creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json',scope)
+    creds = ServiceAccountCredentials.from_json_keyfile_name('apps/data/credentials.json',scope)
     client = gspread.authorize(creds)
     sheet = client.open('salesforce_items').sheet1
     #row=[sheet.row_count-1,"bulb"]
