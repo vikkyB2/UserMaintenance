@@ -16,7 +16,7 @@ def fetchItems():
     df = pd.DataFrame(legislators)
     columns = list(df)
     values = df.values.tolist()
-     resp = {
+    resp = {
         "values":values,
         "columns":columns,
         "name": "TB_ITEMS",
